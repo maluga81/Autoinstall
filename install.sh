@@ -143,21 +143,42 @@ clear
 cd
 
 echo
-echo -e "-----------------------------------------------------------------------------"
-echo -e "|                                                                                |"
-echo -e "|         ${BOLD}----- PawCoin Masternode script -----${NONE}                    |"
-echo -e "|                                                                                |"
-echo -e "|${CYAN} _____                        _____           _         ${NONE}          |"
-echo -e "|${CYAN}|  __ \                      / ____|         (_)        ${NONE}          |"
-echo -e "|${CYAN}| |__) |   __ _  __      __ | |        ___    _   _ __  ${NONE}          |"
-echo -e "|${CYAN}|  ___/   / _` | \ \ /\ / / | |       / _ \  | | | '_ \ ${NONE}          |"
-echo -e "|${CYAN}| |      | (_| |  \ V  V /  | |____  | (_) | | | | | | |${NONE}          |"
-echo -e "|${CYAN}|_|       \__,_|   \_/\_/    \_____|  \___/  |_| |_| |_|${NONE}          |"
-echo -e "|                                                                                |"
-echo -e "----------------------------------------------------------------------------"
+echo -e "--------------------------------------------------------------------"
+echo -e "|                                                                  |"
+echo -e "|         ${BOLD}----- Bitcoin Lightning Masternode script -----${NONE}          |"
+echo -e "|                                                                  |"
+echo -e "|                                ${CYAN}//${NONE}                                |"
+echo -e "|                              ${CYAN}///${NONE}                                 |"
+echo -e "|                            ${CYAN}// /${NONE}                                  |"
+echo -e "|                          ${CYAN}//  /_____${NONE}                              |"
+echo -e "|                        ${CYAN}//____    //${NONE}                              |"
+echo -e "|                             ${CYAN}/  //${NONE}                                |"
+echo -e "|                            ${CYAN}/ //${NONE}                                  |"
+echo -e "|                           ${CYAN}///${NONE}                                    |"
+echo -e "|                          ${CYAN}///${NONE}                                     |"
+echo -e "|                         ${CYAN}//${NONE}                                       |"
+echo -e "|                                                                  |"
+echo -e "|                                                                  |"
+echo -e "|                 ${CYAN} _     _ _            _${NONE}                          |"
+echo -e "|                 ${CYAN}| |   (_) |          (_)${NONE}                         |"
+echo -e "|                 ${CYAN}| |__  _| |_ ___ ___  _ _ __${NONE}                     |"
+echo -e "|                 ${CYAN}|  _ \| | __/ __/ _ \| |  _ \ ${NONE}                   |"
+echo -e "|                 ${CYAN}| |_) | | || (_| (_) | | | | |${NONE}                   |"
+echo -e "|                 ${CYAN}|____/|_|\__\___\___/|_|_| |_|${NONE}                   |"
+echo -e "|                                                                  |"
+echo -e "|           ${CYAN} _ _       _     _         _ ${NONE}                          |" 
+echo -e "|           ${CYAN}| (_)     | |   | |       (_)${NONE}                          |"                   
+echo -e "|           ${CYAN}| |_  __ _| |__ | |_ _ __  _ _ __   __ _${NONE}               |"
+echo -e "|           ${CYAN}| | |/ _  |  _ \| __|  _ \| |  _ \ / _  |${NONE}              |"
+echo -e "|           ${CYAN}| | | (_| | | | | |_| | | | | | | | (_| |${NONE}              |"
+echo -e "|           ${CYAN}|_|_|\__, |_| |_|\__|_| |_|_|_| |_|\__, |${NONE}              |"
+echo -e "|                 ${CYAN}__/ |                         __/ |${NONE}              |"
+echo -e "|                ${CYAN}|___/                         |___/${NONE}               |"
+echo -e "|                                                                  |"
+echo -e "--------------------------------------------------------------------"
 
 echo -e "${BOLD}"
-read -p "This script will setup your PawCoin Masternode. Do you wish to continue? (y/n)? " response
+read -p "This script will setup your Bitcoin Lightning Masternode. Do you wish to continue? (y/n)? " response
 echo -e "${NONE}"
 
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
@@ -176,7 +197,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
     echo
     echo -e "${CYAN}masternode1 ${mnip}:${COINPORT} ${mnkey} tx index${NONE}"
     echo
-    echo -e "${BOLD}Continue with the cold wallet part of the guide${NONE}
+    echo -e "${BOLD}Continue with the cold wallet part of the guide${NONE}"
     echo
 else
     echo && echo "Installation cancelled" && echo
