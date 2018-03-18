@@ -8,7 +8,7 @@ CYAN='\033[01;36m'
 WHITE='\033[01;37m'
 BOLD='\033[1m'
 UNDERLINE='\033[4m'
-MAX=9
+MAX=7
 
 COINGITHUB=https://github.com/PawCoin/PawCoinMN
 COINPORT=33128
