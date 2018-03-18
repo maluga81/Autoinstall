@@ -62,6 +62,12 @@ installDependencies() {
     sudo add-apt-repository ppa:bitcoin/bitcoin -y > /dev/null 2>&1
     sudo apt-get update -qq -y > /dev/null 2>&1
     sudo apt-get install libdb4.8-dev libdb4.8++-dev -qq -y > /dev/null 2>&1
+    fallocate -l 2G /swapfile
+    chown root:root /swapfile
+    chmod 0600 /swapfile
+    sudo bash -c "echo 'vm.swappiness = 10' >> /etc/sysctl.conf"
+    mkswap /swapfile
+    swapon /swapfile
     echo -e "${NONE}${GREEN}* Done${NONE}";
 }
 
@@ -115,41 +121,6 @@ syncWallet() {
 
 clear
 cd
-
-echo
-echo -e "--------------------------------------------------------------------"
-echo -e "|                                                                  |"
-echo -e "|         ${BOLD}----- Bitcoin Lightning Masternode script -----${NONE}          |"
-echo -e "|                                                                  |"
-echo -e "|                                ${CYAN}//${NONE}                                |"
-echo -e "|                              ${CYAN}///${NONE}                                 |"
-echo -e "|                            ${CYAN}// /${NONE}                                  |"
-echo -e "|                          ${CYAN}//  /_____${NONE}                              |"
-echo -e "|                        ${CYAN}//____    //${NONE}                              |"
-echo -e "|                             ${CYAN}/  //${NONE}                                |"
-echo -e "|                            ${CYAN}/ //${NONE}                                  |"
-echo -e "|                           ${CYAN}///${NONE}                                    |"
-echo -e "|                          ${CYAN}///${NONE}                                     |"
-echo -e "|                         ${CYAN}//${NONE}                                       |"
-echo -e "|                                                                  |"
-echo -e "|                                                                  |"
-echo -e "|                 ${CYAN} _     _ _            _${NONE}                          |"
-echo -e "|                 ${CYAN}| |   (_) |          (_)${NONE}                         |"
-echo -e "|                 ${CYAN}| |__  _| |_ ___ ___  _ _ __${NONE}                     |"
-echo -e "|                 ${CYAN}|  _ \| | __/ __/ _ \| |  _ \ ${NONE}                   |"
-echo -e "|                 ${CYAN}| |_) | | || (_| (_) | | | | |${NONE}                   |"
-echo -e "|                 ${CYAN}|____/|_|\__\___\___/|_|_| |_|${NONE}                   |"
-echo -e "|                                                                  |"
-echo -e "|           ${CYAN} _ _       _     _         _ ${NONE}                          |" 
-echo -e "|           ${CYAN}| (_)     | |   | |       (_)${NONE}                          |"                   
-echo -e "|           ${CYAN}| |_  __ _| |__ | |_ _ __  _ _ __   __ _${NONE}               |"
-echo -e "|           ${CYAN}| | |/ _  |  _ \| __|  _ \| |  _ \ / _  |${NONE}              |"
-echo -e "|           ${CYAN}| | | (_| | | | | |_| | | | | | | | (_| |${NONE}              |"
-echo -e "|           ${CYAN}|_|_|\__, |_| |_|\__|_| |_|_|_| |_|\__, |${NONE}              |"
-echo -e "|                 ${CYAN}__/ |                         __/ |${NONE}              |"
-echo -e "|                ${CYAN}|___/                         |___/${NONE}               |"
-echo -e "|                                                                  |"
-echo -e "--------------------------------------------------------------------"
 
 echo -e "${BOLD}"
 read -p "This script will setup your PawCoin Masternode. Do you wish to continue? (y/n)? " response
