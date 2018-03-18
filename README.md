@@ -5,7 +5,9 @@ Easy masternode installation of Pawcoin
 Log into your VPS
 Type these lines
 
-wget https://github.com/soybtc/PawCoin/blob/master/install.sh
+git clone  https://github.com/soybtc/PawCoin.git
+
+cd PawCoin
 
 chmod +x install.sh
 
