@@ -38,7 +38,7 @@ updateAndUpgrade() {
 
 installFirewall() {
     echo
-    echo -e "[4/${MAX}] Installing UFW. Please wait..."
+    echo -e "[3/${MAX}] Installing UFW. Please wait..."
     sudo apt-get -y install ufw > /dev/null 2>&1
     sudo ufw default deny incoming > /dev/null 2>&1
     sudo ufw default allow outgoing > /dev/null 2>&1
@@ -53,7 +53,7 @@ installFirewall() {
 
 installDependencies() {
     echo
-    echo -e "[5/${MAX}] Installing dependencies. Please wait..."
+    echo -e "[4/${MAX}] Installing dependencies. Please wait..."
     sudo apt-get install -y build-essential libtool autotools-dev pkg-config libssl-dev libboost-all-dev autoconf automake -qq -y > /dev/null 2>&1
     sudo apt-get install libzmq3-dev libminiupnpc-dev libssl-dev libevent-dev -qq -y > /dev/null 2>&1
     sudo apt-get install libgmp-dev -qq -y > /dev/null 2>&1
@@ -76,7 +76,7 @@ installDependencies() {
 
 installWallet() {
     echo
-    echo -e "[6/${MAX}] Installing wallet. Please wait..."
+    echo -e "[5/${MAX}] Installing wallet. Please wait..."
     git clone https://github.com/PawCoin/PawCoinMN
 cd ~/PawCoinMN/src/leveldb
     wget https://github.com/google/leveldb/archive/v1.18.tar.gz
@@ -97,7 +97,7 @@ cd ~/PawCoinMN/src/leveldb
 
 startWallet() {
     echo
-    echo -e "[8/${MAX}] Starting wallet daemon..."
+    echo -e "[6/${MAX}] Starting wallet daemon..."
     cd ~/$COINCORE
     sudo rm governance.dat > /dev/null 2>&1
     sudo rm netfulfilled.dat > /dev/null 2>&1
@@ -115,7 +115,7 @@ startWallet() {
 
 syncWallet() {
     echo
-    echo "[9/${MAX}] Waiting for wallet to sync. It will take a while, you can go grab a coffee :)";
+    echo "[7/${MAX}] Waiting for wallet to sync. It will take a while, you can go grab a coffee :)";
     echo -e "${GREEN}* Blockchain Synced${NONE}";
     echo -e "${GREEN}* Masternode List Synced${NONE}";
     echo -e "${GREEN}* Winners List Synced${NONE}";
