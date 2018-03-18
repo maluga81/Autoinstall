@@ -14,7 +14,7 @@ COINGITHUB=https://github.com/PawCoin/PawCoinMN
 COINPORT=33128
 COINRPCPORT=33127
 COINDAEMON=pawcoind
-COINCORE=.pawcoin
+COINCORE=.PawCoinMN
 COINCONFIG=pawcoin.conf
 
 checkForUbuntuVersion() {
