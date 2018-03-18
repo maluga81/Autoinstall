@@ -10,12 +10,12 @@ BOLD='\033[1m'
 UNDERLINE='\033[4m'
 MAX=9
 
-COINGITHUB=https://github.com/Bitcoinlightning/Bitcoin-Lightning.git
-COINPORT=17127
-COINRPCPORT=17126
-COINDAEMON=Bitcoin_Lightningd
-COINCORE=.Bitcoin_Lightning
-COINCONFIG=Bitcoin_Lightning.conf
+COINGITHUB=https://github.com/PawCoin/PawCoinMN
+COINPORT=33128
+COINRPCPORT=33127
+COINDAEMON=pawcoind
+COINCORE=.pawcoin
+COINCONFIG=pawcoin.conf
 
 checkForUbuntuVersion() {
    echo "[1/${MAX}] Checking Ubuntu version..."
@@ -34,15 +34,6 @@ updateAndUpgrade() {
     sudo DEBIAN_FRONTEND=noninteractive apt-get update -qq -y > /dev/null 2>&1
     sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq > /dev/null 2>&1
     echo -e "${GREEN}* Done${NONE}";
-}
-
-installFail2Ban() {
-    echo
-    echo -e "[3/${MAX}] Installing fail2ban. Please wait..."
-    sudo apt-get -y install fail2ban > /dev/null 2>&1
-    sudo systemctl enable fail2ban > /dev/null 2>&1
-    sudo systemctl start fail2ban > /dev/null 2>&1
-    echo -e "${NONE}${GREEN}* Done${NONE}";
 }
 
 installFirewall() {
@@ -77,33 +68,21 @@ installDependencies() {
 installWallet() {
     echo
     echo -e "[6/${MAX}] Installing wallet. Please wait..."
-    wget https://github.com/Bitcoinlightning/Bitcoin-Lightning/releases/download/v1.1.0.0/Bitcoin_Lightning-Daemon-1.1.0.0.tar.gz
-    tar xvzf Bitcoin_Lightning-Daemon-1.1.0.0.tar.gz
-    rm Bitcoin_Lightning-Daemon-1.1.0.0.tar.gz
-    chmod 755 Bitcoin_Lightningd
+    git clone https://github.com/PawCoin/PawCoinMN
+cd ~/PawCoinMN/src/leveldb
+    wget https://github.com/google/leveldb/archive/v1.18.tar.gz
+    tar xfv v1.18.tar.gz
+    cp leveldb-1.18/Makefile ~/PawCoinMN/src/leveldb/
+    chmod +x build_detect_platform
+    cd
+    cd ~/PawCoinMN/src
+    make -f makefile.unix USE_UPNP=-
+    chmod 755 pawcoind
     strip $COINDAEMON
     sudo mv $COINDAEMON /usr/bin
     cd
-    echo -e "${NONE}${GREEN}* Done${NONE}";
-}
-
-configureWallet() {
-    echo
-    echo -e "[7/${MAX}] Configuring wallet. Please wait..."
-    mkdir .Bitcoin_Lightning
-    rpcuser=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
-    rpcpass=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
-    echo -e "rpcuser=${rpcuser}\nrpcpassword=${rpcpass}" > ~/$COINCORE/$COINCONFIG
-    $COINDAEMON -daemon > /dev/null 2>&1
-    sleep 10
-
-    mnip=$(curl --silent ipinfo.io/ip)
-    mnkey=$($COINDAEMON masternode genkey)
-
-    $COINDAEMON stop > /dev/null 2>&1
-    sleep 10
-
-    echo -e "rpcuser=${rpcuser}\nrpcpassword=${rpcpass}\nrpcport=${COINRPCPORT}\nrpcallowip=127.0.0.1\nrpcthreads=8\nlisten=1\nserver=1\ndaemon=1\nstaking=0\ndiscover=1\nexternalip=${mnip}:${COINPORT}\nmasternode=1\nmasternodeprivkey=${mnkey}" > ~/$COINCORE/$COINCONFIG
+    echo -e "${NONE}${GREEN}* Add your masternode configuration and save. press "control x" after "y" and "enter"${NONE}";
+    nano ~/.PawcoinMN/pawcoin.conf
     echo -e "${NONE}${GREEN}* Done${NONE}";
 }
 
@@ -122,20 +101,15 @@ startWallet() {
     sudo rm banlist.dat > /dev/null 2>&1
     cd
     $COINDAEMON -daemon > /dev/null 2>&1
-    sleep 5
     echo -e "${GREEN}* Done${NONE}";
 }
 
 syncWallet() {
     echo
     echo "[9/${MAX}] Waiting for wallet to sync. It will take a while, you can go grab a coffee :)";
-    sleep 2
     echo -e "${GREEN}* Blockchain Synced${NONE}";
-    sleep 2
     echo -e "${GREEN}* Masternode List Synced${NONE}";
-    sleep 2
     echo -e "${GREEN}* Winners List Synced${NONE}";
-    sleep 2
     echo -e "${GREEN}* Done reindexing wallet${NONE}";
 }
 
@@ -143,62 +117,35 @@ clear
 cd
 
 echo
-echo -e "--------------------------------------------------------------------"
-echo -e "|                                                                  |"
-echo -e "|         ${BOLD}----- Bitcoin Lightning Masternode script -----${NONE}          |"
-echo -e "|                                                                  |"
-echo -e "|                                ${CYAN}//${NONE}                                |"
-echo -e "|                              ${CYAN}///${NONE}                                 |"
-echo -e "|                            ${CYAN}// /${NONE}                                  |"
-echo -e "|                          ${CYAN}//  /_____${NONE}                              |"
-echo -e "|                        ${CYAN}//____    //${NONE}                              |"
-echo -e "|                             ${CYAN}/  //${NONE}                                |"
-echo -e "|                            ${CYAN}/ //${NONE}                                  |"
-echo -e "|                           ${CYAN}///${NONE}                                    |"
-echo -e "|                          ${CYAN}///${NONE}                                     |"
-echo -e "|                         ${CYAN}//${NONE}                                       |"
-echo -e "|                                                                  |"
-echo -e "|                                                                  |"
-echo -e "|                 ${CYAN} _     _ _            _${NONE}                          |"
-echo -e "|                 ${CYAN}| |   (_) |          (_)${NONE}                         |"
-echo -e "|                 ${CYAN}| |__  _| |_ ___ ___  _ _ __${NONE}                     |"
-echo -e "|                 ${CYAN}|  _ \| | __/ __/ _ \| |  _ \ ${NONE}                   |"
-echo -e "|                 ${CYAN}| |_) | | || (_| (_) | | | | |${NONE}                   |"
-echo -e "|                 ${CYAN}|____/|_|\__\___\___/|_|_| |_|${NONE}                   |"
-echo -e "|                                                                  |"
-echo -e "|           ${CYAN} _ _       _     _         _ ${NONE}                          |" 
-echo -e "|           ${CYAN}| (_)     | |   | |       (_)${NONE}                          |"                   
-echo -e "|           ${CYAN}| |_  __ _| |__ | |_ _ __  _ _ __   __ _${NONE}               |"
-echo -e "|           ${CYAN}| | |/ _  |  _ \| __|  _ \| |  _ \ / _  |${NONE}              |"
-echo -e "|           ${CYAN}| | | (_| | | | | |_| | | | | | | | (_| |${NONE}              |"
-echo -e "|           ${CYAN}|_|_|\__, |_| |_|\__|_| |_|_|_| |_|\__, |${NONE}              |"
-echo -e "|                 ${CYAN}__/ |                         __/ |${NONE}              |"
-echo -e "|                ${CYAN}|___/                         |___/${NONE}               |"
-echo -e "|                                                                  |"
-echo -e "--------------------------------------------------------------------"
+echo -e "-----------------------------------------------------------------------------"
+echo -e "|                                                                                |"
+echo -e "|         ${BOLD}----- PawCoin Masternode script -----${NONE}                    |"
+echo -e "|                                                                                |"
+echo -e "|${CYAN} _____                        _____           _         ${NONE}          |"
+echo -e "|${CYAN}|  __ \                      / ____|         (_)        ${NONE}          |"
+echo -e "|${CYAN}| |__) |   __ _  __      __ | |        ___    _   _ __  ${NONE}          |"
+echo -e "|${CYAN}|  ___/   / _` | \ \ /\ / / | |       / _ \  | | | '_ \ ${NONE}          |"
+echo -e "|${CYAN}| |      | (_| |  \ V  V /  | |____  | (_) | | | | | | |${NONE}          |"
+echo -e "|${CYAN}|_|       \__,_|   \_/\_/    \_____|  \___/  |_| |_| |_|${NONE}          |"
+echo -e "|                                                                                |"
+echo -e "----------------------------------------------------------------------------"
 
 echo -e "${BOLD}"
-read -p "This script will setup your Bitcoin Lightning Masternode. Do you wish to continue? (y/n)? " response
+read -p "This script will setup your PawCoin Masternode. Do you wish to continue? (y/n)? " response
 echo -e "${NONE}"
 
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
     checkForUbuntuVersion
     updateAndUpgrade
-    installFail2Ban
     installFirewall
     installDependencies
     installWallet
-    configureWallet
     startWallet
     syncWallet
 
     echo
-    echo -e "${BOLD}The VPS side of your masternode has been installed. Use the following line in your cold wallet masternode.conf and replace the tx and index${NONE}".
+    echo -e "${BOLD}The VPS side of your masternode has been installed.${NONE}".
     echo
-    echo -e "${CYAN}masternode1 ${mnip}:${COINPORT} ${mnkey} tx index${NONE}"
-    echo
-    echo -e "${BOLD}Continue with the cold wallet part of the guide${NONE}"
-    echo
-else
+    else
     echo && echo "Installation cancelled" && echo
 fi
