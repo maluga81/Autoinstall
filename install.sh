@@ -176,7 +176,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
     echo
     echo -e "${CYAN}masternode1 ${mnip}:${COINPORT} ${mnkey} tx index${NONE}"
     echo
-    echo -e "${BOLD}Continue with the cold wallet part of the guide${NONE}"
+    echo -e "${BOLD}Continue with the cold wallet part of the guide${NONE}
     echo
 else
     echo && echo "Installation cancelled" && echo
