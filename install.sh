@@ -57,6 +57,9 @@ installDependencies() {
     sudo apt-get install -y build-essential libtool autotools-dev pkg-config libssl-dev libboost-all-dev autoconf automake -qq -y > /dev/null 2>&1
     sudo apt-get install libzmq3-dev libminiupnpc-dev libssl-dev libevent-dev -qq -y > /dev/null 2>&1
     sudo apt-get install libgmp-dev -qq -y > /dev/null 2>&1
+    aptitude install miniupnpc libminiupnpc-dev 2>&1
+    apt-get install build-essential 2>&1
+    sudo apt-get install libssl-dev libbo0st-dev 2>&1
     sudo apt-get install openssl -qq -y > /dev/null 2>&1
     sudo apt-get install software-properties-common -qq -y > /dev/null 2>&1
     sudo add-apt-repository ppa:bitcoin/bitcoin -y > /dev/null 2>&1
