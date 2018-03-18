@@ -54,10 +54,9 @@ installFirewall() {
 installDependencies() {
     echo
     echo -e "[4/${MAX}] Installing dependencies. Please wait..."
-    sudo apt-get install -y build-essential libtool autotools-dev pkg-config libssl-dev libboost-all-dev autoconf automake -qq -y > /dev/null 2>&1
-    sudo apt-get install libzmq3-dev libminiupnpc-dev libssl-dev libevent-dev -qq -y > /dev/null 2>&1
-    sudo apt-get install libgmp-dev -qq -y > /dev/null 2>&1
-    aptitude install miniupnpc libminiupnpc-dev 2>&1
+    sudo apt-get install libssl-dev libdb-dev libdb++-dev libqrencode-dev qt4-qmake libqtgui4 libqt4-dev git 2>&1
+    sudo apt-get install libminiupnpc-dev libminiupnpc8 libboost-all-dev build-essential git  libboost1.48-all-dev 2>&1
+    apt-get install ntp unzip git build-essential libssl-dev libdb-dev libdb++-dev libboost-all-dev libqrencode-dev aptitude && aptitude install miniupnpc libminiupnpc-dev 2>&1
     apt-get install build-essential 2>&1
     sudo apt-get install libssl-dev libbo0st-dev 2>&1
     sudo apt-get install openssl -qq -y > /dev/null 2>&1
