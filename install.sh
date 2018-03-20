@@ -9,7 +9,8 @@ WHITE='\033[01;37m'
 BOLD='\033[1m'
 UNDERLINE='\033[4m'
 MAX=7
-
+sudo adduser 
+su - 
 COINGITHUB=https://github.com/PawCoin/PawCoinMN
 COINPORT=33128
 COINRPCPORT=33127
